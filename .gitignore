@@ -1,0 +1,11 @@
+build/
+out/
+bin/
+.vs/
+*.user
+*.exe
+*.obj
+*.o
+*.pdb
+.cache/
+compile_commands.json
