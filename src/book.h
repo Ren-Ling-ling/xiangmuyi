@@ -18,8 +18,10 @@ class book{
     void borrowbook();
     void returnbook();
     string Getname();
+    string Getpublisher();
     double Getprice();
     bool Getavailable();
-
+    int Getpage();
+bool isvalidisbn()const;
 };
 #endif

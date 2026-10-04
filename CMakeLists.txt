@@ -17,6 +17,7 @@ add_executable(${PROJECT_NAME} ${SOURCES})
 target_include_directories(${PROJECT_NAME} PRIVATE "${CMAKE_SOURCE_DIR}/include")
 
 if(MINGW)
+    target_compile_options(${PROJECT_NAME} PRIVATE -fexec-charset=GBK)
     target_link_options(${PROJECT_NAME} PRIVATE
         -static-libgcc
         -static-libstdc++
