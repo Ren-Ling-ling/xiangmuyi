@@ -20,6 +20,7 @@ bool student::borrow(book& b) {
     }
     b.borrowbook();
     borrowcount++;
+    borrowedBooks.push_back(b.Getname());
     cout << name << "成功借阅《" << b.Getname() << "》" << endl;
     return true;
 }
@@ -31,6 +32,12 @@ bool student::returnbook(book& b) {
     }
     b.returnbook();
     borrowcount--;
+    for (int i = 0; i < (int)borrowedBooks.size(); i++) { 
+        if (borrowedBooks[i] == b.Getname()) {
+           borrowedBooks.erase(borrowedBooks.begin() + i);
+            break;
+        }
+    }
     cout << name << "成功还书《" << b.Getname() << "》" << endl;
     return true;
 }

@@ -2,6 +2,7 @@
 #define student_h
 
 #include <string>
+#include <vector>
 #include "book.h"
 using namespace std;
 
@@ -11,6 +12,7 @@ private:
     string id;
     int borrowcount;
     int maxbook;
+    vector<string> borrowedBooks; 
 public:
     student(string name="", string id="", int maxbook=5);
     bool borrow(book& b);
