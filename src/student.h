@@ -12,7 +12,7 @@ private:
     string id;
     int borrowcount;
     int maxbook;
-    vector<string> borrowedBooks; 
+    vector<string> borrowedBooks;          //已借书名列表
 public:
     student(string name="", string id="", int maxbook=5);
     bool borrow(book& b);
