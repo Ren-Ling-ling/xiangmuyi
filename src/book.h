@@ -2,25 +2,16 @@
 #define book_h
 
 #include<string>
+#include"resource.h"
 using namespace std;
-class book{
+class book:public resource{
     private:
-    string name;
     string isbn;
-    string publisher;
-    double price;
     int page;
-    bool available;
     public:
     book();
     book(string name,string isbn,string publisher,double price,int page);
     void show();
-    void borrowbook();
-    void returnbook();
-    string Getname();
-    string Getpublisher();
-    double Getprice();
-    bool Getavailable();
     int Getpage();
 bool isvalidisbn()const;
 };

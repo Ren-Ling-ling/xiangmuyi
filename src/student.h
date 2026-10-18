@@ -2,26 +2,17 @@
 #define student_h
 
 #include <string>
-#include <vector>
-#include "book.h"
+#include "user.h"
 using namespace std;
 
-class student {
+class student :public user {
 private:
-    string name;
-    string id;
-    int borrowcount;
-    int maxbook;
-    vector<string> borrowedBooks;          //已借书名列表
+    string id;     
 public:
-    student(string name="", string id="", int maxbook=5);
-    bool borrow(book& b);
-    bool returnbook(book& b);
-    void showinfo();
-    string Getname();
+   student();
+   student(string name,string id,string department,int maxbook);
+    void show();
     string Getid();
-    int Getborrowcount();
-    int Getmaxbook();
 };
 
 #endif
