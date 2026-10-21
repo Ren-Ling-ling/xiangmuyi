@@ -11,11 +11,12 @@ class resource{
     public:
     resource();
     resource(string name,string publisher,double price);
-    void show();
-    void borrowbook();
-    void returnbook();
-    string Getname();
+    virtual void show()=0;
+    virtual bool borrow();
+    virtual void returnItem();
+    virtual ~resource();
     string Getpublisher();
+    string Getname();
     double Getprice();
     bool Getavailable();
 };

@@ -11,6 +11,5 @@ magazine::magazine(string name,string publisher,double price,int issue,string pe
     this->period=period;
 }
 void magazine::show(){
-resource::show();
-cout<<"期号："<<issue<<"出版周期"<<period<<endl;
+cout << "杂志名称:" << name << " 出版社:" << publisher << " 价格:" << price << " 状态:" << (available ? "在馆" : "不在馆")<< " 期号:" << issue << " 出版周期:" << period << endl;
 }

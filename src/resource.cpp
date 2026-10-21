@@ -13,11 +13,15 @@ resource::resource(string name,string publisher,double price){
     this->price=price;
     available=true;
 }
-    void resource::show(){
-        cout<<"名称："<<name<<"出版社："<<publisher<<"价格："<<price<<"状态："<<(available?"在馆":"不在馆")<<endl;
-    }
-void resource::borrowbook(){available=false;}
-void resource::returnbook(){available=true;}
+bool resource::borrow(){
+    if(!available)return false;
+    available=false;
+    return true;
+}
+void resource::returnItem(){
+    available=true;
+}
+resource::~resource(){}
 string resource::Getname(){return name;}
 string resource::Getpublisher(){return publisher;}
 double resource::Getprice(){return price;}

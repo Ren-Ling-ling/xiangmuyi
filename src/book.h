@@ -11,7 +11,7 @@ class book:public resource{
     public:
     book();
     book(string name,string isbn,string publisher,double price,int page);
-    void show();
+    void show()override;
     int Getpage();
 bool isvalidisbn()const;
 };

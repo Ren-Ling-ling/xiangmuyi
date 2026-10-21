@@ -10,6 +10,8 @@ class eresource:public resource{
     public:
     eresource();
     eresource(string name,string publisher,double price,string url,string format);
-    void show();
+    void show()override;
+    bool borrow()override;
+    void returnItem()override;
 } ;
 #endif

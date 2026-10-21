@@ -14,26 +14,25 @@ user::user(string name,string department,int maxbook){
     this->borrowcount=0;
 }
 bool user::borrowbook(resource&r){
-    if(!r.Getavailable()){
-        cout<<"借阅失败：该资源已被借出"<<endl;
-        return false;
-    }
 if(borrowcount>=maxbook){
    cout<<"借阅失败：借阅数量达到上限"<<endl;
    return false;
 }
-r.borrowbook();
-borrowcount++;
-borrowedBooks.push_back(r.Getname());
-cout<<name<<"成功借阅《"<<r.Getname()<<"》"<<endl;
-return true;
+if(!r.borrow()){
+        cout<<"借阅失败：该资源已被借出"<<endl;
+        return false;
+    }
+    borrowcount++;
+    borrowedBooks.push_back(r.Getname());
+    cout << name << "成功借阅《" << r.Getname() << "》" << endl;
+    return true;
 }
 bool user::returnbook(resource&r){
     if(r.Getavailable()){
         cout << "归还失败：该资源并未借出" << endl;
         return false;
     }
-    r.returnbook();
+    r.returnItem();
     borrowcount--;
     for(int i=0;i<(int)borrowedBooks.size();i++){
         if(borrowedBooks[i]==r.Getname()){

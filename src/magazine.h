@@ -10,6 +10,6 @@ string period;
 public:
 magazine();
 magazine(string name,string publisher,double price,int issue,string period);
-void show();
+void show()override;
 };
 #endif
