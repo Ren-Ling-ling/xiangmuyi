@@ -13,5 +13,6 @@ class eresource:public resource{
     void show()override;
     bool borrow()override;
     void returnItem()override;
+    void writetoFile(ofstream&out)override;
 } ;
 #endif

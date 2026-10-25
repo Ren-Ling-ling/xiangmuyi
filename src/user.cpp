@@ -23,7 +23,10 @@ if(!r.borrow()){
         return false;
     }
     borrowcount++;
-    borrowedBooks.push_back(r.Getname());
+    borrowRecord rec;
+    rec.name=r.Getname();
+    rec.borrowtime=time(nullptr);
+    borrowedBooks.push_back(rec);
     cout << name << "成功借阅《" << r.Getname() << "》" << endl;
     return true;
 }
@@ -35,7 +38,14 @@ bool user::returnbook(resource&r){
     r.returnItem();
     borrowcount--;
     for(int i=0;i<(int)borrowedBooks.size();i++){
-        if(borrowedBooks[i]==r.Getname()){
+        if(borrowedBooks[i].name==r.Getname()){
+            time_t now=time(nullptr);
+            int days=(int)((now-borrowedBooks[i].borrowtime)/86400);
+            double fine=r.calfine(days);
+            if(fine>0)
+             cout << "逾期！已借 " << days << " 天，罚款 " << fine << " 元" << endl;
+             else
+              cout << "已借 " << days << " 天，未逾期" << endl;
             borrowedBooks.erase(borrowedBooks.begin()+i);
             break;
         }
@@ -50,3 +60,11 @@ string user::Getname(){return name;}
 string user::Getdepartment(){return department;}
 int user::Getmaxbook(){return maxbook;}
 int user::Getborrowcount(){return borrowcount;}
+void user::simulateborrowdays(const string& rname, int daysAgo) {
+    for (int i = 0; i < (int)borrowedBooks.size(); i++) {
+        if (borrowedBooks[i].name == rname) {
+            borrowedBooks[i].borrowtime = time(nullptr) - (time_t)daysAgo * 86400;
+            break;
+        }
+    }
+}

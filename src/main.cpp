@@ -32,6 +32,14 @@ int main() {
 
     cout << "\n剩余资源 " << endl;
     lib.showall();
+    cout<<"\n保存到文件"<<endl;   
+    cout << "\n 逾期罚款测试 " << endl;
+    student s2("李四", "20250001", "计算机学院", 5);
+    lib.borrow("三国演义", s2);          
+    s2.simulateborrowdays("三国演义", 40); 
+    lib.returnRes("三国演义", s2);         
+    s2.show();
+    lib.savetoFile("resources.txt");
 
-    return 0;   
+    return 0;
 }

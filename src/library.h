@@ -17,5 +17,6 @@ void borrow(const string& name, user& u);
 resource*find(const string&name);
 void returnRes(const string&name,user&u);
 void remove(const string&name);
+void savetoFile(const string&filename);
 };
 #endif

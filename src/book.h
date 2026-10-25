@@ -12,7 +12,10 @@ class book:public resource{
     book();
     book(string name,string isbn,string publisher,double price,int page);
     void show()override;
+    void writetoFile(ofstream&out)override;
     int Getpage();
 bool isvalidisbn()const;
+int getborrowdays()override;
+double calfine(int daysBorrowed)override;
 };
 #endif

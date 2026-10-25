@@ -11,5 +11,8 @@ public:
 magazine();
 magazine(string name,string publisher,double price,int issue,string period);
 void show()override;
+void writetoFile(ofstream&out)override;
+    int getborrowdays() override;
+    double calfine(int daysBorrowed) override;
 };
 #endif

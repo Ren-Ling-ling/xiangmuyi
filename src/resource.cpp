@@ -26,3 +26,5 @@ string resource::Getname(){return name;}
 string resource::Getpublisher(){return publisher;}
 double resource::Getprice(){return price;}
 bool resource::Getavailable(){return available;}
+int resource::getborrowdays(){return 0;}
+double resource::calfine(int daysBorrowed){return 0;}

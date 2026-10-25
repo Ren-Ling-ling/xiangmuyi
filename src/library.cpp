@@ -52,3 +52,15 @@ void library::remove(const string &name){
     }
     cout << "删除失败：找不到资源《" << name << "》" << endl;
 }
+void library::savetoFile(const string&filename){
+    ofstream out(filename);
+    if (!out){
+        cout << "文件打开失败！" << endl;
+        return;
+    }
+    for(int i=0;i<(int)resources.size();i++){
+        resources[i]->writetoFile(out);
+    }
+out.close();
+cout << "已保存到文件：" << filename << endl;
+    }
