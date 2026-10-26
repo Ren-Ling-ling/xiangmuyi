@@ -9,7 +9,7 @@ string workid;
 public:
 teacher();
 teacher(string name,string workid,string department,int maxbook);
-void show();
+void show()override;
 string Getworkid();
 };
 #endif

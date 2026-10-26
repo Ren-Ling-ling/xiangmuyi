@@ -1,45 +1,55 @@
-#include"book.h"
-#include"magazine.h"
-#include"eresource.h"
-#include"student.h"
-#include"teacher.h"
-#include"library.h"
+#include "book.h"
+#include "magazine.h"
+#include "eresource.h"
+#include "student.h"
+#include "teacher.h"
+#include "library.h"
 #include <iostream>
 using namespace std;
+
 int main() {
-     library lib;
+    library lib;
     lib.addResource(new book("三国演义", "9780306406157", "人民文学出版社", 69.9, 300));
     lib.addResource(new magazine("读者", "读者出版社", 10.0, 5, "月刊"));
     lib.addResource(new eresource("c++教程", "人民邮电出版社", 20.0, "http://xxx.com", "pdf"));
+
+    // 用户用 new 创建，交给 Library 管理
+    student* ps = new student("张三", "20258967", "计算机学院", 2);
+    teacher* pt = new teacher("李老师", "T1001", "计算机学院", 5);
+    lib.adduser(ps);
+    lib.adduser(pt);
+
     cout << "所有资源" << endl;
-    lib.showall();      
+    lib.showall();          // printAll(resources)
+    cout << "所有用户" << endl;
+    lib.showusers();        // printAll(users) 
 
-    student s("张三", "20258967", "计算机学院", 2);
-    teacher t("李老师", "T1001", "计算机学院", 5);
+    cout << "\n张三借阅" << endl;
+    lib.borrow("三国演义", *ps);   
+    lib.borrow("c++教程", *ps);
+    lib.borrow("读者", *ps);
+    ps->show();
 
-    cout << "\n张三借阅 " << endl;
-    lib.borrow("三国演义", s);    // 成功
-    lib.borrow("c++教程", s);     // 成功（电子资源可借）
-    lib.borrow("读者", s);        // 超过上限（已借2本）
-    s.show();
+    cout << "\n归还" << endl;
+    lib.returnRes("三国演义", *ps);
+    ps->show();
 
-    cout << "\n 归还 " << endl;
-    lib.returnRes("三国演义", s);  // 成功
-    s.show();
-
-    cout << "\n删除《读者》 " << endl;
+    cout << "\n删除《读者》" << endl;
     lib.remove("读者");
 
-    cout << "\n剩余资源 " << endl;
+    cout << "\n剩余资源" << endl;
     lib.showall();
-    cout<<"\n保存到文件"<<endl;   
-    cout << "\n 逾期罚款测试 " << endl;
-    student s2("李四", "20250001", "计算机学院", 5);
-    lib.borrow("三国演义", s2);          
-    s2.simulateborrowdays("三国演义", 40); 
-    lib.returnRes("三国演义", s2);         
-    s2.show();
+
+    cout << "\n保存到文件" << endl;
     lib.savetoFile("resources.txt");
 
-    return 0;
+    cout << "\n逾期罚款测试" << endl;
+    student* ps2 = new student("李四", "20250001", "计算机学院", 5);
+    lib.adduser(ps2);
+    lib.borrow("三国演义", *ps2);
+    ps2->simulateborrowdays("三国演义", 40);
+    lib.returnRes("三国演义", *ps2);
+    ps2->show();
+
+    return 0;   
 }

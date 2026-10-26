@@ -1,20 +1,29 @@
 #include"library.h"
+#include"utility.h"
 #include<iostream>
 using namespace std;
 library::library(){}
 library::~library(){
     for(int i=0;i<(int)resources.size();i++){
-        delete resources[i];
+      delete resources[i];
     }
-resources.clear();
-}
+    for(int i=0;i<(int)users.size();i++){
+      delete users[i];
+      }
+      users.clear();
+    }
+
 void library::addResource(resource*r){
     resources.push_back(r);
 }
+void library::adduser(user*u){
+    users.push_back(u);
+}
+void library::showusers(){
+    printAll(users);
+}
 void library::showall(){
-    for(int i=0;i<(int)resources.size();i++){
-        resources[i]->show();
-    }
+    printAll(resources);
 }
 resource*library::find(const string& name){
     for(int i=0;i<(int)resources.size();i++){

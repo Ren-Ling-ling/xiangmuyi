@@ -68,3 +68,4 @@ void user::simulateborrowdays(const string& rname, int daysAgo) {
         }
     }
 }
+user::~user(){ }

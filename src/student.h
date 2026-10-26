@@ -11,7 +11,7 @@ private:
 public:
    student();
    student(string name,string id,string department,int maxbook);
-    void show();
+    void show()override;
     string Getid();
 };
 
