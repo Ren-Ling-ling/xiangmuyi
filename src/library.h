@@ -33,5 +33,6 @@ resource*find(const string&name);
 void returnRes(const string&name,user&u);
 void remove(const string&name);
 void savetoFile(const string&filename);
+void loadFromFile(const string&filename);
 };
 #endif

@@ -14,7 +14,8 @@ void magazine::show(){
 cout << "杂志名称:" << name << " 出版社:" << publisher << " 价格:" << price << " 状态:" << (available ? "在馆" : "不在馆")<< " 期号:" << issue << " 出版周期:" << period << endl;
 }
 void magazine::writetoFile(ofstream&out){
-   out << "杂志," << name << ",期号:" << issue << ",出版周期:" << period << endl;
+   out << "杂志," << name << "," << publisher << "," << price << "," << issue << "," << period << endl;
+
 }
 int magazine::getborrowdays() { return 15; }
 

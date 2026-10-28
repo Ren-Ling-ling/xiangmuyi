@@ -21,5 +21,5 @@ void eresource::returnItem(){
     
 }
 void eresource::writetoFile(ofstream&out){
-    out << "电子资源," << name << ",网址:" << url << ",格式:" << format << endl;
+    out << "电子资源," <<  name << "," << publisher << "," << price << "," << url << "," << format << endl;
 }

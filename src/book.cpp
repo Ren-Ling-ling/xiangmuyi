@@ -1,4 +1,7 @@
 #include"book.h"
+#include "book.h"
+#include "magazine.h"
+#include "eresource.h"
 #include<iostream>
 using namespace std;
 book::book():resource(){
@@ -39,7 +42,7 @@ void book::show(){
     cout << "书名:" << name << " 出版社:" << publisher << " ISBN:" << isbn << " 价格:" << price << " 页数:" << page << " 状态:" << (available ? "在馆" : "不在馆") << endl;
 }  // 输出图书信息
 void book::writetoFile(ofstream&out){
-     out << "图书," << name << ",ISBN:" << isbn << ",页数:" << page << endl;
+     out << "图书," << name << "," << publisher << "," << price << "," << isbn << "," << page << endl;
 }
 int book::Getpage(){return page;}
 int book::getborrowdays(){return 30;}

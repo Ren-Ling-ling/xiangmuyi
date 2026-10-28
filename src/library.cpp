@@ -1,5 +1,9 @@
 #include"library.h"
 #include"utility.h"
+#include "book.h"
+#include "magazine.h"
+#include "eresource.h"
+#include<sstream>
 #include<iostream>
 using namespace std;
 library::library(){}
@@ -73,3 +77,38 @@ void library::savetoFile(const string&filename){
 out.close();
 cout << "已保存到文件：" << filename << endl;
     }
+    void library::loadFromFile(const string&filename){
+        ifstream in(filename);
+        if(!in){cout<<"文件打开失败！"<<endl;return;}
+        string line;
+        while(getline(in,line)){
+            if(line.empty())continue;
+            stringstream ss(line);
+            string type,name,pub,priceStr;
+            getline(ss,type,',');
+            getline(ss,name,',');
+            getline(ss,pub,',');
+            getline(ss,priceStr,',');
+            double price=stod(priceStr);
+            if(type=="图书"){
+                string isbn,pageStr;
+                 getline(ss,isbn,',');
+                  getline(ss,pageStr,',');
+                  resources.push_back(new book(name,isbn,pub,price,stoi(pageStr)));           
+                   }
+                              else if(type=="杂志"){
+                string issueStr,period;
+                 getline(ss,issueStr,',');
+                  getline(ss,period,',');
+                  resources.push_back(new magazine(name,pub,price,stoi(issueStr),period));           
+        }
+         else if(type=="电子资源"){
+                string url,format;
+                 getline(ss,url,',');
+                  getline(ss,format,',');
+                  resources.push_back(new eresource(name,pub,price,url,format));           
+        }
+    }
+    in.close();
+    cout<<"已经从文件读取资源"<<endl;
+}

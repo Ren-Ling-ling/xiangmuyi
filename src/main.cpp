@@ -50,6 +50,9 @@ int main() {
     ps2->simulateborrowdays("三国演义", 40);
     lib.returnRes("三国演义", *ps2);
     ps2->show();
-
+    cout << "\n----- 读取文件测试 -----" << endl;
+    library lib2;                       
+    lib2.loadFromFile("resources.txt");  // 从文件读回
+    lib2.showall();                      // 显示还原的资源
     return 0;   
 }
