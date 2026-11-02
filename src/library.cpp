@@ -3,6 +3,8 @@
 #include "book.h"
 #include "magazine.h"
 #include "eresource.h"
+#include "student.h"
+#include"teacher.h"
 #include<sstream>
 #include<iostream>
 using namespace std;
@@ -112,3 +114,68 @@ cout << "已保存到文件：" << filename << endl;
     in.close();
     cout<<"已经从文件读取资源"<<endl;
 }
+void library::showByname(const string&name){
+    resource*r=find(name);
+    if(r==nullptr){
+         cout << "找不到资源《" << name << "》" << endl;
+         return;
+    }
+    r->show();
+}
+void library::showBytype(int type){
+    for(int i=0;i<(int)resources.size();i++){
+        resource*r=resources[i];
+        bool match=false;
+        if(type==1&&dynamic_cast<book*>(r)) match=true;
+else if(type==2&&dynamic_cast<magazine*>(r)) match=true;
+else if(type==3&&dynamic_cast<eresource*>(r)) match=true;
+     if(match)r->show();
+    }
+}
+void library::saveUsers(const string&filename){
+    ofstream out(filename);
+    if(!out){cout << "文件打开失败！" << endl; return;}
+    for(int i=0;i<(int)users.size();i++){
+student*s=dynamic_cast<student*>(users[i]);
+teacher*t=dynamic_cast<teacher*>(users[i]);
+if(s!=nullptr){
+    out << "学生," << s->Getname() << "," << s->Getid() << "," << s->Getdepartment() << "," << s->Getmaxbook() << endl;
+}
+else if(t!=nullptr){
+out << "教师," << t->Getname() << "," << t->Getworkid() << ","<< t->Getdepartment() << "," << t->Getmaxbook() << endl;
+}
+    }
+out.close();
+cout << "用户已保存到文件：" << filename << endl;
+}
+void library::loadUsers(const string&filename){
+    ifstream in(filename);
+    if(!in){cout << "文件打开失败！" << endl; return;}
+    string line;
+    while(getline(in,line)){
+        if(line.empty())continue;
+        stringstream ss(line);
+        string type,name,id,dept,maxStr;
+        getline(ss,type,',');
+          getline(ss,name,',');
+            getline(ss,id,',');
+              getline(ss,dept,',');
+                getline(ss,maxStr,',');
+                int maxbook=stoi(maxStr);
+                if(type=="学生")users.push_back(new student(name, id, dept, maxbook));
+                else if(type=="教师")users.push_back(new teacher(name,id,dept,maxbook));
+    }
+    in.close();
+    cout << "已从文件读取用户" << endl;
+}
+user* library::login(const string&id){
+    for(int i=0;i<(int)users.size();i++){
+        student*s=dynamic_cast<student*>(users[i]);
+        teacher*t=dynamic_cast<teacher*>(users[i]);
+        if(s!=nullptr&&s->Getid()==id) return users[i];
+ if(t!=nullptr&&s->Getid()==id) return users[i];
+    }
+    return nullptr;
+}
+bool library::hasusers(){return !users.empty();}
+bool library::hasResources(){return!resources.empty();}

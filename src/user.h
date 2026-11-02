@@ -29,5 +29,6 @@ string Getdepartment();
 int Getmaxbook();
 int Getborrowcount();
 void simulateborrowdays(const string&rname,int daysago);
+void showRecords();
 };
 #endif

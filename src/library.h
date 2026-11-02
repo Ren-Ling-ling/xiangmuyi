@@ -22,6 +22,7 @@ private:
 vector<resource*> resources;
 vector<user*>users;
 public:
+bool hasusers();
 library();
 ~library();
 void addResource(resource*r);
@@ -34,5 +35,11 @@ void returnRes(const string&name,user&u);
 void remove(const string&name);
 void savetoFile(const string&filename);
 void loadFromFile(const string&filename);
+void showByname(const string&name);
+void showBytype(int type);
+void saveUsers(const string&filename);
+void loadUsers(const string&filename);
+user*login(const string&id);
+bool hasResources();
 };
 #endif

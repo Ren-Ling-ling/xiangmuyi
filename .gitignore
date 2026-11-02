@@ -9,3 +9,5 @@ bin/
 *.pdb
 .cache/
 compile_commands.json
+resources.txt
+users.txt

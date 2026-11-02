@@ -69,3 +69,9 @@ void user::simulateborrowdays(const string& rname, int daysAgo) {
     }
 }
 user::~user(){ }
+void user::showRecords(){
+    cout << "【" << name << "】当前借阅 " << borrowedBooks.size() << " 本：" << endl;
+for(int i=0;i<(int)borrowedBooks.size();i++){
+ cout << "  《" << borrowedBooks[i].name << "》  借阅时间: "<< ctime(&borrowedBooks[i].borrowtime); 
+}
+}
