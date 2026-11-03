@@ -6,7 +6,15 @@
 #include "library.h"
 #include <iostream>
 using namespace std;
-
+int readInt(){
+    int x;
+    while(!(cin>>x)){
+        cin.clear();
+        cin.ignore(10000,'\n');
+        cout<<"输入失效，请输入数字：";
+    }
+    return x;
+}
 int main() {
     library lib;
 
@@ -57,7 +65,7 @@ int main() {
         cout << "11. 切换用户（重新登录）" << endl;
         cout << "0. 退出" << endl;
         cout << "请选择：";
-        cin >> choice;
+        int choice=readInt();
 
         if (choice == 0) {
             // 退出前自动保存

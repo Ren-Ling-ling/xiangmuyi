@@ -79,12 +79,14 @@ void library::savetoFile(const string&filename){
 out.close();
 cout << "已保存到文件：" << filename << endl;
     }
+
     void library::loadFromFile(const string&filename){
         ifstream in(filename);
         if(!in){cout<<"文件打开失败！"<<endl;return;}
         string line;
         while(getline(in,line)){
             if(line.empty())continue;
+           try{
             stringstream ss(line);
             string type,name,pub,priceStr;
             getline(ss,type,',');
@@ -111,6 +113,10 @@ cout << "已保存到文件：" << filename << endl;
                   resources.push_back(new eresource(name,pub,price,url,format));           
         }
     }
+    catch(...){
+        cout<<"跳过格式错误的一行："<<line<<endl;
+    }
+}
     in.close();
     cout<<"已经从文件读取资源"<<endl;
 }
@@ -154,7 +160,9 @@ void library::loadUsers(const string&filename){
     string line;
     while(getline(in,line)){
         if(line.empty())continue;
-        stringstream ss(line);
+       try{
+
+       stringstream ss(line);
         string type,name,id,dept,maxStr;
         getline(ss,type,',');
           getline(ss,name,',');
@@ -165,6 +173,10 @@ void library::loadUsers(const string&filename){
                 if(type=="学生")users.push_back(new student(name, id, dept, maxbook));
                 else if(type=="教师")users.push_back(new teacher(name,id,dept,maxbook));
     }
+    catch(...){
+        cout<<"跳过格式错误的一行："<<line<<endl;
+    }
+}
     in.close();
     cout << "已从文件读取用户" << endl;
 }
