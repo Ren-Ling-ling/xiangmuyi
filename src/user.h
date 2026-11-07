@@ -7,8 +7,10 @@
 using namespace std;
 struct borrowRecord{
     string name;
-    time_t borrowtime;
+     time_t borrowtime;
+     int borrowDays;
 };
+
 class user{
     string name;
     string department;
@@ -26,9 +28,13 @@ virtual void show();
 virtual ~user();
 string Getname();
 string Getdepartment();
+virtual string GetuserId()=0;
+virtual string Getrolename()=0;
 int Getmaxbook();
 int Getborrowcount();
 void simulateborrowdays(const string&rname,int daysago);
 void showRecords();
+vector<borrowRecord> Getrecord();
+void restoreborrow(const vector<borrowRecord>&recs);
 };
 #endif

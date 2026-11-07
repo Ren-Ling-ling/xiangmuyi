@@ -14,4 +14,5 @@ void student::show() {
     user::show();
     cout << "学号："<<id<< endl;
 }  // 输出学生学号信息
-string student::Getid() { return id; }
+string student::GetuserId() { return id; }
+string student::Getrolename(){return "学生";}

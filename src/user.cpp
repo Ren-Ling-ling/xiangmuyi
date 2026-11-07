@@ -26,7 +26,9 @@ if(!r.borrow()){
     borrowRecord rec;
     rec.name=r.Getname();
     rec.borrowtime=time(nullptr);
+    rec.borrowDays=r.getborrowdays();
     borrowedBooks.push_back(rec);
+    r.setborrower(name);
     cout << name << "成功借阅《" << r.Getname() << "》" << endl;
     return true;
 }
@@ -42,6 +44,7 @@ bool user::returnbook(resource&r){
             time_t now=time(nullptr);
             int days=(int)((now-borrowedBooks[i].borrowtime)/86400);
             double fine=r.calfine(days);
+            r.setborrower("");
             if(fine>0)
              cout << "逾期！已借 " << days << " 天，罚款 " << fine << " 元" << endl;
              else
@@ -72,6 +75,26 @@ user::~user(){ }
 void user::showRecords(){
     cout << "【" << name << "】当前借阅 " << borrowedBooks.size() << " 本：" << endl;
 for(int i=0;i<(int)borrowedBooks.size();i++){
+    borrowRecord&rec=borrowedBooks[i];
+    time_t now=time(nullptr);
+    int days=(int)((now-rec.borrowtime)/86400);
  cout << "  《" << borrowedBooks[i].name << "》  借阅时间: "<< ctime(&borrowedBooks[i].borrowtime); 
+ if(rec.borrowDays==0){
+    cout << "（电子资源，无期限）" << endl;
+ }
+ else if(days>rec.borrowDays){
+    cout << " 【逾期 " << (days - rec.borrowDays) << " 天】" << endl;
+ }
+else{
+cout << "      （已借 " << days << " 天，期限 " << rec.borrowDays << " 天）" << endl;
 }
 }
+}
+vector<borrowRecord>user::Getrecord(){
+    return borrowedBooks;
+}
+void user::restoreborrow(const vector<borrowRecord>&recs){
+    borrowedBooks=recs;
+   borrowcount=(int)recs.size();
+}
+

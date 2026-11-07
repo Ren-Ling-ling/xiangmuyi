@@ -11,5 +11,7 @@ teacher();
 teacher(string name,string workid,string department,int maxbook);
 void show()override;
 string Getworkid();
+string GetuserId()override;
+string Getrolename()override;
 };
 #endif

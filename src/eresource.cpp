@@ -11,7 +11,9 @@ eresource::eresource(string name,string publisher,double price,string url,string
     this->format=format;
 }
 void eresource::show(){
-   cout << "电子资源名称:" << name << " 出版社:" << publisher << " 价格:" << price  << " 网址:" << url << " 格式：" << format << endl;
+   cout << "电子资源名称:" << name << " 出版社:" << publisher << " 价格:" << price  << " 网址:" << url << " 格式：" << format ;
+   if (!borrower.empty()) cout << " 借阅人:" << borrower;
+   cout<< endl;
 
 }
 bool eresource::borrow(){
@@ -21,5 +23,5 @@ void eresource::returnItem(){
     
 }
 void eresource::writetoFile(ofstream&out){
-    out << "电子资源," <<  name << "," << publisher << "," << price << "," << url << "," << format << endl;
+    out << "电子资源," << name << "," << publisher << "," << price << "," << url << "," << format << "," << (available ? 1 : 0) << "," << borrower << endl;
 }

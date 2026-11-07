@@ -12,3 +12,5 @@ void teacher::show(){
     cout<<"工号："<<workid<<endl;
 }
 string teacher::Getworkid(){return workid;}
+string teacher::GetuserId(){return workid;}
+string teacher::Getrolename(){return "教师";}

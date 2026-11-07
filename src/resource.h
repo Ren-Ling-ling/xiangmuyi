@@ -9,6 +9,7 @@ class resource{
     string publisher;
     double price;
     bool available;
+    string borrower;
     public:
     resource();
     resource(string name,string publisher,double price);
@@ -23,6 +24,8 @@ class resource{
     string Getname();
     double Getprice();
     bool Getavailable();
-
+     void setborrower(const string&who);
+     void restorestate(bool avail,const string&who);
+     string Getborrower();
 };
 #endif

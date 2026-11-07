@@ -7,12 +7,14 @@ using namespace std;
 
 class student :public user {
 private:
-    string id;     
+    string id;
 public:
    student();
    student(string name,string id,string department,int maxbook);
     void show()override;
     string Getid();
+    string GetuserId()override;
+    string Getrolename()override;
 };
 
 #endif

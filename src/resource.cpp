@@ -28,3 +28,14 @@ double resource::Getprice(){return price;}
 bool resource::Getavailable(){return available;}
 int resource::getborrowdays(){return 0;}
 double resource::calfine(int daysBorrowed){return 0;}
+void resource::setborrower(const string& who)
+{
+    borrower=who;
+}
+void resource::restorestate(bool avail,const string&who){
+    available=avail;
+    borrower=who;
+}
+string resource::Getborrower(){
+    return borrower;
+}

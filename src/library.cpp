@@ -5,6 +5,7 @@
 #include "eresource.h"
 #include "student.h"
 #include"teacher.h"
+#include"admin.h"
 #include<sstream>
 #include<iostream>
 using namespace std;
@@ -94,25 +95,37 @@ cout << "已保存到文件：" << filename << endl;
             getline(ss,pub,',');
             getline(ss,priceStr,',');
             double price=stod(priceStr);
-            if(type=="图书"){
-                string isbn,pageStr;
+        if(type=="图书"){
+                string isbn,pageStr,availStr,bwr;
                  getline(ss,isbn,',');
                   getline(ss,pageStr,',');
-                  resources.push_back(new book(name,isbn,pub,price,stoi(pageStr)));           
-                   }
-                              else if(type=="杂志"){
-                string issueStr,period;
+                  getline(ss,availStr,',');
+                  getline(ss,bwr,',');
+                  book*p=new book(name,isbn,pub,price,stoi(pageStr));
+                  p->restorestate(stoi(availStr)!=0,bwr);
+                  resources.push_back(p);
+                }
+        else if(type=="杂志"){
+                string issueStr,period,availStr,bwr;
                  getline(ss,issueStr,',');
                   getline(ss,period,',');
-                  resources.push_back(new magazine(name,pub,price,stoi(issueStr),period));           
+                  getline(ss,availStr,',');
+                  getline(ss,bwr,',');
+                  magazine*p=new magazine(name,pub,price,stoi(issueStr),period);
+                p->restorestate(stoi(availStr)!=0,bwr);
+                resources.push_back(p);          
         }
          else if(type=="电子资源"){
-                string url,format;
+                string url,format,availStr,bwr;
                  getline(ss,url,',');
                   getline(ss,format,',');
-                  resources.push_back(new eresource(name,pub,price,url,format));           
-        }
+                   getline(ss,availStr,',');
+                  getline(ss,bwr,',');
+                  eresource*p=new eresource(name,pub,price,url,format);
+                 p->restorestate(stoi(availStr)!=0,bwr);
+                 resources.push_back(p);
     }
+}
     catch(...){
         cout<<"跳过格式错误的一行："<<line<<endl;
     }
@@ -133,8 +146,8 @@ void library::showBytype(int type){
         resource*r=resources[i];
         bool match=false;
         if(type==1&&dynamic_cast<book*>(r)) match=true;
-else if(type==2&&dynamic_cast<magazine*>(r)) match=true;
-else if(type==3&&dynamic_cast<eresource*>(r)) match=true;
+            else if(type==2&&dynamic_cast<magazine*>(r)) match=true;
+                 else if(type==3&&dynamic_cast<eresource*>(r)) match=true;
      if(match)r->show();
     }
 }
@@ -142,18 +155,24 @@ void library::saveUsers(const string&filename){
     ofstream out(filename);
     if(!out){cout << "文件打开失败！" << endl; return;}
     for(int i=0;i<(int)users.size();i++){
-student*s=dynamic_cast<student*>(users[i]);
-teacher*t=dynamic_cast<teacher*>(users[i]);
-if(s!=nullptr){
-    out << "学生," << s->Getname() << "," << s->Getid() << "," << s->Getdepartment() << "," << s->Getmaxbook() << endl;
-}
-else if(t!=nullptr){
-out << "教师," << t->Getname() << "," << t->Getworkid() << ","<< t->Getdepartment() << "," << t->Getmaxbook() << endl;
+    user*u=users[i];
+    out<<u->Getrolename()<<","<<u->Getname()<<","<<u->GetuserId()<<","<<u->Getdepartment()<<","<<u->Getmaxbook();
+vector<borrowRecord>recs=users[i]->Getrecord();
+    out<<','<<recs.size();
+for(int j=0;j<(int)recs.size();j++){
+    out<<","<<recs[j].name<<","<<recs[j].borrowtime<<","<<recs[j].borrowDays;
+vector<borrowRecord>recs=u->Getrecord();
+out<<","<<recs.size();
+for(int j=0;i<(int)recs.size();j++)
+out<<","<<recs[j].name<<","<<recs[j].borrowtime<<","<<recs[j].borrowDays;
+out<<endl;
 }
     }
 out.close();
 cout << "用户已保存到文件：" << filename << endl;
 }
+
+
 void library::loadUsers(const string&filename){
     ifstream in(filename);
     if(!in){cout << "文件打开失败！" << endl; return;}
@@ -163,15 +182,35 @@ void library::loadUsers(const string&filename){
        try{
 
        stringstream ss(line);
-        string type,name,id,dept,maxStr;
+        string type,name,id,dept,maxStr,cntStr;
         getline(ss,type,',');
           getline(ss,name,',');
             getline(ss,id,',');
               getline(ss,dept,',');
                 getline(ss,maxStr,',');
                 int maxbook=stoi(maxStr);
-                if(type=="学生")users.push_back(new student(name, id, dept, maxbook));
-                else if(type=="教师")users.push_back(new teacher(name,id,dept,maxbook));
+                user*u=nullptr;
+         if (type == "学生")      u = new student(name, id, dept, maxbook);
+            else if (type == "教师") u = new teacher(name, id, dept, maxbook);
+                else if(type=="管理员") u=new admin(name,id,dept,maxbook);
+        if (u != nullptr) {
+                getline(ss, cntStr, ',');
+                int cnt = stoi(cntStr);
+                vector<borrowRecord> recs;
+                for (int i = 0; i < cnt; i++) {
+                    string rname, tstr,dstr;
+                    getline(ss, rname, ',');
+                    getline(ss, tstr, ',');
+                    getline(ss,dstr,',');
+                    borrowRecord rec;
+                    rec.name = rname;
+                    rec.borrowtime = (time_t)stoll(tstr);
+                    rec.borrowDays=stoi(dstr);
+                    recs.push_back(rec);
+                }
+                u->restoreborrow(recs);
+                users.push_back(u);
+            }
     }
     catch(...){
         cout<<"跳过格式错误的一行："<<line<<endl;
@@ -182,12 +221,25 @@ void library::loadUsers(const string&filename){
 }
 user* library::login(const string&id){
     for(int i=0;i<(int)users.size();i++){
-        student*s=dynamic_cast<student*>(users[i]);
-        teacher*t=dynamic_cast<teacher*>(users[i]);
-        if(s!=nullptr&&s->Getid()==id) return users[i];
- if(t!=nullptr&&s->Getid()==id) return users[i];
+        if(users[i]->GetuserId()==id) return users[i];
     }
     return nullptr;
 }
 bool library::hasusers(){return !users.empty();}
 bool library::hasResources(){return!resources.empty();}
+void library::removeuser(user*u){
+    for(int i=0;i<(int)users.size();i++){
+           if(users[i]==u){
+            delete users[i];
+            users.erase(users.begin()+i);
+            return;
+           }
+    }
+}
+int library::admincount(){
+    int c=0;
+    for(int i=0;i<(int)users.size();i++){
+        if(users[i]->Getrolename()=="管理员")c++;
+    }
+      return c;
+}

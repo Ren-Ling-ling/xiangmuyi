@@ -39,14 +39,16 @@ this->page=page;
 available=true;    // 新书默认在馆
 }
 void book::show(){
-    cout << "书名:" << name << " 出版社:" << publisher << " ISBN:" << isbn << " 价格:" << price << " 页数:" << page << " 状态:" << (available ? "在馆" : "不在馆") << endl;
+    cout << "书名:" << name << " 出版社:" << publisher << " ISBN:" << isbn << " 价格:" << price << " 页数:" << page << " 状态:" << (available ? "在馆" : "不在馆");
+     if (!borrower.empty()) cout << " 借阅人:" << borrower;
+     cout<< endl;
 }  // 输出图书信息
-void book::writetoFile(ofstream&out){
-     out << "图书," << name << "," << publisher << "," << price << "," << isbn << "," << page << endl;
-}
 int book::Getpage(){return page;}
 int book::getborrowdays(){return 30;}
 double book::calfine(int daysBorrowed){
     if(daysBorrowed>30)return (daysBorrowed-30)*0.5;
-    return 0;
+  return 0;
+}
+void book::writetoFile(ofstream&out){
+     out << "图书," << name << "," << publisher << "," << price << ","<< isbn << "," << page << "," << (available ? 1 : 0) << "," << borrower << endl;
 }

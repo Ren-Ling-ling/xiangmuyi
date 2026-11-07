@@ -41,5 +41,7 @@ void saveUsers(const string&filename);
 void loadUsers(const string&filename);
 user*login(const string&id);
 bool hasResources();
+void removeuser(user*U);
+int admincount();
 };
 #endif
