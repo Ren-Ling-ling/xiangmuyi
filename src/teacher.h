@@ -13,5 +13,6 @@ void show()override;
 string Getworkid();
 string GetuserId()override;
 string Getrolename()override;
+static constexpr int MAXBOOK=10;
 };
 #endif

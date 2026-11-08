@@ -44,9 +44,9 @@ void book::show(){
      cout<< endl;
 }  // 输出图书信息
 int book::Getpage(){return page;}
-int book::getborrowdays(){return 30;}
+int book::getborrowdays(){return BORROW_DAYS;}
 double book::calfine(int daysBorrowed){
-    if(daysBorrowed>30)return (daysBorrowed-30)*0.5;
+    if(daysBorrowed>BORROW_DAYS)return (daysBorrowed-BORROW_DAYS)*FINE_PER_DAY;
   return 0;
 }
 void book::writetoFile(ofstream&out){

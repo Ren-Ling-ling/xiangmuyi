@@ -15,10 +15,10 @@ cout << "杂志名称:" << name << " 出版社:" << publisher << " 价格:" << p
 if (!borrower.empty()) cout << " 借阅人:" << borrower;
 cout<< endl;
 }
-int magazine::getborrowdays() { return 15; }
+int magazine::getborrowdays() { return BORROW_DAYS; }
 
 double magazine::calfine(int daysBorrowed) {
-    if (daysBorrowed > 15) return (daysBorrowed - 15) * 0.3;
+    if (daysBorrowed > BORROW_DAYS) return (daysBorrowed - BORROW_DAYS) * FINE_PER_DAY;
     return 0;
 }
 void magazine::writetoFile(ofstream&out){

@@ -13,5 +13,6 @@ class admin:public user{
     string Getadminid();
     string GetuserId()override;
     string Getrolename()override;
+    static constexpr int MAXBOOK=0;
 };
 #endif

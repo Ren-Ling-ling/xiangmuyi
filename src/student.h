@@ -15,6 +15,7 @@ public:
     string Getid();
     string GetuserId()override;
     string Getrolename()override;
+    static constexpr int MAXBOOK=5;
 };
 
 #endif

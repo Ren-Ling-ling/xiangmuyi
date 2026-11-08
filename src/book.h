@@ -17,5 +17,7 @@ class book:public resource{
 bool isvalidisbn()const;
 int getborrowdays()override;
 double calfine(int daysBorrowed)override;
+static constexpr int BORROW_DAYS=30;
+static constexpr double FINE_PER_DAY=0.5;
 };
 #endif

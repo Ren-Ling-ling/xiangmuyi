@@ -1,6 +1,7 @@
 #include"user.h"
 #include<iostream>
 using namespace std;
+static constexpr int SECONDS_PER_DAY = 86400;
 user::user(){
     name="";
     department="";
@@ -77,7 +78,7 @@ void user::showRecords(){
 for(int i=0;i<(int)borrowedBooks.size();i++){
     borrowRecord&rec=borrowedBooks[i];
     time_t now=time(nullptr);
-    int days=(int)((now-rec.borrowtime)/86400);
+    int days=(int)((now-rec.borrowtime)/SECONDS_PER_DAY);
  cout << "  《" << borrowedBooks[i].name << "》  借阅时间: "<< ctime(&borrowedBooks[i].borrowtime); 
  if(rec.borrowDays==0){
     cout << "（电子资源，无期限）" << endl;

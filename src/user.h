@@ -5,6 +5,7 @@
 #include <ctime>    
 #include"resource.h"
 using namespace std;
+
 struct borrowRecord{
     string name;
      time_t borrowtime;
